@@ -1,3 +1,5 @@
+import java.util.regex.Pattern.compile
+
 plugins {
     java
     id("org.springframework.boot") version "3.0.2"
@@ -43,6 +45,11 @@ dependencies {
     implementation("mysql:mysql-connector-java:8.0.32")
 
     implementation("org.hibernate:hibernate-validator:8.0.0.Final")
+
+    //flyway
+
+
+    compile ("org.flywaydb.enterprise:flyway-mysql")
 
 }
 

@@ -24,6 +24,7 @@ public class AdminService {
 
     public Boolean saveProvider(ProviderRequest providerRequest) {
         Provider provider = providerRepo.save(ProviderRequest.providerRequestToProvider(providerRequest));
+        addressRepo.saveAll(AddressRequest.addressRequestToAddress(providerRequest,provider));
         if (provider != null) {
             return true;
         }

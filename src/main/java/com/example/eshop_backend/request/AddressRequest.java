@@ -22,15 +22,17 @@ public class AddressRequest {
     private String number;
     private Provider provider;
 
-    public static Set<Address> addressRequestToAddress(ProviderRequest pr) {
-        return pr.getAddressReq().stream().map((addressRequest ->
+    public static Set<Address> addressRequestToAddress(ProviderRequest pr,Provider provider) {
+        Set<Address> addresses= pr.getAddressReq().stream().map((addressRequest ->
              new Address(
                     UUID.randomUUID(),
                     addressRequest.getPlz(),
                     addressRequest.getStr(),
                     addressRequest.getNumber(),
-                    addressRequest.getProvider()
+                    provider
             )
         )).collect(Collectors.toSet());
+        System.out.println(addresses);
+        return addresses;
     }
 }

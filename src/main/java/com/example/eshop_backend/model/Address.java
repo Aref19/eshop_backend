@@ -9,7 +9,8 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class Address {

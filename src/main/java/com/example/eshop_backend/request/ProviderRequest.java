@@ -26,8 +26,7 @@ public class ProviderRequest {
         Provider provider= new Provider(
                 UUID.randomUUID(),
                 providerRequest.getNameReq(),
-                providerRequest.getWebLinkReq(),
-                AddressRequest.addressRequestToAddress(providerRequest)
+                providerRequest.getWebLinkReq()
         );
 
         return provider;

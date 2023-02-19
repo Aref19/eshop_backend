@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @Entity
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Provider {
@@ -18,15 +19,9 @@ public class Provider {
     private UUID id ;
     private String name;
     private String webLink;
-    @OneToMany(mappedBy = "provider")
-    private Set<Address> Address;
 
 
 
-    public Provider(UUID id, String name, String webLink, Set<com.example.eshop_backend.model.Address> address) {
-        this.id = id;
-        this.name = name;
-        this.webLink = webLink;
-        Address = address;
-    }
+
+
 }

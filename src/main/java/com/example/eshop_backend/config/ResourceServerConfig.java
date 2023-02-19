@@ -66,7 +66,9 @@ public class ResourceServerConfig {
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
             System.out.println(returnValue);
+            System.out.println(returnValue);
             return returnValue;
+
 
         });
         return jwtAuthenticationConverter;
