@@ -34,6 +34,16 @@ dependencies {
 
     //jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    //lombok
+    compileOnly ("org.projectlombok:lombok:1.18.22")
+    annotationProcessor ("org.projectlombok:lombok:1.18.22")
+
+    //mysql
+    implementation("mysql:mysql-connector-java:8.0.32")
+
+    implementation("org.hibernate:hibernate-validator:8.0.0.Final")
+
 }
 
 tasks.withType<Test> {
