@@ -1,0 +1,14 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8181/auth/realms/eshop_backend
+
+
+keycloak:
+  auth-server-url: http://localhost:8181/auth
+  realm: eshop_backend
+  client-id: eshop_backend
+  client-secret: Z9TWYDnhz9RQVGxDKorlCWuCchv7c1rP
+  use-resource-role-mappings: true
