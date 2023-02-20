@@ -20,16 +20,16 @@ public class AddressRequest {
     private String plz;
     private String str;
     private String number;
-    private Provider provider;
 
-    public static Set<Address> addressRequestToAddress(ProviderRequest pr,Provider provider) {
+
+    public static Set<Address> addressRequestToAddress(ProviderRequest pr) {
         Set<Address> addresses= pr.getAddressReq().stream().map((addressRequest ->
              new Address(
                     UUID.randomUUID(),
                     addressRequest.getPlz(),
                     addressRequest.getStr(),
-                    addressRequest.getNumber(),
-                    provider
+                    addressRequest.getNumber()
+
             )
         )).collect(Collectors.toSet());
         System.out.println(addresses);

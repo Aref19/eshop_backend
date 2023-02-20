@@ -1,16 +1,14 @@
 package com.example.eshop_backend.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
 
 @Entity
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class Image {
@@ -19,7 +17,7 @@ public class Image {
     private UUID id;
     private String url;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "item_Id")
     private Item item;
 }

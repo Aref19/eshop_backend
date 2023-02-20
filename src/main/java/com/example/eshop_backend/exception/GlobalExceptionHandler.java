@@ -24,5 +24,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, ex.getStatusCode());
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Object> handleAdminException(ResponseStatusException ex) {
+        var response = new AdminException(
+                String.valueOf(ex.getStatusCode().value()),
+                ex.getReason(),
+                Instant.now().toString()
+
+        );
+        return new ResponseEntity<>(response, ex.getStatusCode());
+    }
+
 }
 

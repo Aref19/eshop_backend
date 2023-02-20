@@ -8,22 +8,27 @@ import java.util.UUID;
 
 @Entity
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class Item {
+    @NonNull
     @Id
     private UUID id ;
+    @NonNull
     private String price;
+    @NonNull
     private String title;
+    @NonNull
     private String des;
 
-    @NonNull
+
     @ManyToOne()
     @JoinColumn(name = "Provider_Id")
     private Provider provider;
 
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item",cascade = CascadeType.REMOVE)
     private Set<Image> image;
 
 }
