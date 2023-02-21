@@ -1,6 +1,5 @@
 package com.example.eshop_backend.exception;
 
-import com.example.eshop_backend.exception.ExceptionResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

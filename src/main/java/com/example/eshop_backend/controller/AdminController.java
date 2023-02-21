@@ -33,7 +33,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/deleteProvider")
-    public AdminException addProvider(@RequestParam UUID uuid){
+    public AdminException deleteProvider    (@RequestParam UUID uuid){
 
         return adminService.deleteProvider(uuid);
     }

@@ -12,4 +12,6 @@ public interface KeycloakClient {
     @FormUrlEncoded
     @POST("/auth/realms/eshop_backend/protocol/openid-connect/token")
     public Call<Object> token(@FieldMap Map<String, String> map);
+
+
 }

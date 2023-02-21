@@ -1,8 +1,10 @@
 package com.example.eshop_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
@@ -10,9 +12,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Address {
+public class Address  {
     @NonNull
     @Id
+    @JsonIgnore
     private UUID id ;
     @NonNull
     private String plz;
@@ -25,6 +28,5 @@ public class Address {
     @ManyToOne()
     @JoinColumn(name = "Provider_Id")
     private Provider provider;
-
 
 }

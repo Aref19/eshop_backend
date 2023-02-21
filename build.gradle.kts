@@ -47,9 +47,12 @@ dependencies {
     implementation("org.hibernate:hibernate-validator:8.0.0.Final")
 
     //flyway
-
-
     compile ("org.flywaydb.enterprise:flyway-mysql")
+    //jackson
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.codehaus.jackson:jackson-core-asl:1.9.13")
+    implementation("org.codehaus.jackson:jackson-mapper-asl:1.9.13")
+
 
 }
 

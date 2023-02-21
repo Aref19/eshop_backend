@@ -1,5 +1,6 @@
 package com.example.eshop_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -17,18 +18,17 @@ import java.util.UUID;
 public class Provider {
     @NonNull
     @Id
-    private UUID id ;
+    @JsonIgnore
+    private UUID id;
     @NonNull
     private String name;
     @NonNull
     private String webLink;
 
-
     @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Address> addresses;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Item> itemSet;
-
-
 
 }
