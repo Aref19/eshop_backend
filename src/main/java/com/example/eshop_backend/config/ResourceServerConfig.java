@@ -36,7 +36,7 @@ public class ResourceServerConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/**")
                 .permitAll()
-                .requestMatchers("/admin/**", "/endUser/**")
+                .requestMatchers("/admin/**", "/endUser/**","/provider/**")
                 .authenticated()
                 .and()
                 .oauth2ResourceServer().jwt().jwtAuthenticationConverter(converter())// after get jwt set a converter to get Roles
@@ -65,7 +65,6 @@ public class ResourceServerConfig {
                     .stream().map(roleName -> "ROLE_" + roleName)
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
-            System.out.println(returnValue);
             System.out.println(returnValue);
             return returnValue;
 

@@ -28,24 +28,20 @@ public class AdminController {
     }
 
     @PostMapping("/addProvider")
-    public AdminException addProvider(@RequestBody  ProviderRequest providerRequest){
-      return adminService.saveProvider(providerRequest);
+    public AdminException addProvider(@RequestBody ProviderRequest providerRequest) {
+        return adminService.saveProvider(providerRequest);
     }
 
     @DeleteMapping("/deleteProvider")
-    public AdminException deleteProvider    (@RequestParam UUID uuid){
+    public AdminException deleteProvider(@RequestParam UUID uuid) {
 
         return adminService.deleteProvider(uuid);
     }
 
-    @PostMapping("/addItems")
-    public AdminException addItems(@RequestParam UUID uuid, @RequestBody List<ItemRequest> itemRequestList){
-        return adminService.addItems(uuid,itemRequestList);
-    }
-
     @GetMapping("/getProvider")
-    public List<Provider> getProvider(){
+    public List<Provider> getProvider() {
         return adminService.getAllItems();
     }
+
 
 }
