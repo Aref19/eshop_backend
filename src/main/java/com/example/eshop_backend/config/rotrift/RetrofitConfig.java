@@ -20,7 +20,7 @@ public class RetrofitConfig {
 
     @Bean
     public KeycloakClient keycloakClient(){
-        return build("http://localhost:8181")
+        return build("http://localhost:8080")
                 .build()
                 .create(KeycloakClient.class); // create an implementation of Api
 

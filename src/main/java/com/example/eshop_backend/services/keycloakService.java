@@ -4,10 +4,11 @@ package com.example.eshop_backend.services;
 import com.example.eshop_backend.config.KeycloakConfig;
 import com.example.eshop_backend.config.rotrift.client.KeycloakClient;
 import com.example.eshop_backend.model.User;
+import org.keycloak.admin.client.resource.RoleMappingResource;
+import org.keycloak.admin.client.resource.RoleScopeResource;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
-import org.keycloak.representations.idm.CredentialRepresentation;
-import org.keycloak.representations.idm.UserRepresentation;
+import org.keycloak.representations.idm.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import retrofit2.HttpException;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -54,7 +56,36 @@ public class keycloakService {
         userRepresentation.setLastName(user.getEmailId());
         userRepresentation.setCredentials(Collections.singletonList(password));
         userRepresentation.setEnabled(true);
-        Response response=userResource.create(userRepresentation);
+        Response response = userResource.create(userRepresentation);
+        assignRole(user);
+    }
+
+    private void assignRole(User user) {
+        ClientRepresentation clientRepresentation = keycloakConfig.getClientRepresentation();
+        RoleRepresentation roleRepresentation = keycloakConfig.realmResource()
+                .clients()
+                .get(clientRepresentation.getId())
+                .roles()
+                .get(user.getRole())
+                .toRepresentation();
+         keycloakConfig.userResource().
+                get(getUser(user)).
+                roles().clientLevel(clientRepresentation.getId()).
+                add(
+                Collections.singletonList(roleRepresentation)
+        );
+
+    }
+
+    private String getUser(User user) {
+        return keycloakConfig.
+                realmResource().
+                users().
+                search(user.getEmailId()
+                ).
+                get(0).
+                getId();
+
     }
 
     private CredentialRepresentation encodePassword(String password) {

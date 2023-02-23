@@ -55,13 +55,13 @@ public class ResourceServerConfig {
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter((j) -> {
 
-            Map<String, Object> realmAccess = (Map<String, Object>) j.getClaims().get("realm_access");
-
+            Map<String, Object> realmAccess = (Map<String, Object>) j.getClaims().get("resource_access");
+            Map<String, Object> eshopAccess=(Map<String, Object>) realmAccess.get("eshop_backend");
             if (realmAccess == null || realmAccess.isEmpty()) {
                 return new ArrayList<>();
             }
 
-            Collection<GrantedAuthority> returnValue = ((List<String>) realmAccess.get("roles"))
+            Collection<GrantedAuthority> returnValue = ((List<String>) eshopAccess.get("roles"))
                     .stream().map(roleName -> "ROLE_" + roleName)
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());

@@ -17,12 +17,14 @@ public class AuthController {
 
     @PostMapping(value = "/token", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public Object getToken(@RequestParam Map<String, String> userInfo) {
+
         return keycloakService.getToken(userInfo);
     }
 
     @PostMapping("/createAccount")
     public void createAccount(@RequestBody User user) {
-         keycloakService.createAccount(user);
+        user.setRole("user");
+        keycloakService.createAccount(user);
     }
 
 }

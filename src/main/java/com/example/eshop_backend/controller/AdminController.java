@@ -3,9 +3,11 @@ package com.example.eshop_backend.controller;
 
 import com.example.eshop_backend.exception.AdminException;
 import com.example.eshop_backend.model.Provider;
+import com.example.eshop_backend.model.User;
 import com.example.eshop_backend.request.ItemRequest;
 import com.example.eshop_backend.request.ProviderRequest;
 import com.example.eshop_backend.services.AdminService;
+import com.example.eshop_backend.services.keycloakService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,8 @@ public class AdminController {
 
     @Autowired
     AdminService adminService;
+    @Autowired
+    keycloakService keycloakService;
 
 
     @GetMapping("/test")
@@ -43,5 +47,9 @@ public class AdminController {
         return adminService.getAllItems();
     }
 
-
+    @PostMapping("/createAccount")
+    public void createAccount(@RequestBody User user) {
+        user.setRole("provider");
+        keycloakService.createAccount(user);
+    }
 }
