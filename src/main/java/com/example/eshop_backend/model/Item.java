@@ -16,7 +16,6 @@ import java.util.UUID;
 public class Item   {
     @NonNull
     @Id
-    @JsonIgnore
     private UUID id ;
     @NonNull
     private String price;

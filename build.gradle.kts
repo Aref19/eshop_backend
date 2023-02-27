@@ -2,7 +2,7 @@ import java.util.regex.Pattern.compile
 
 plugins {
     java
-    id("org.springframework.boot") version "3.0.2"
+    id("org.springframework.boot") version "3.0.0"
     id("io.spring.dependency-management") version "1.1.0"
 }
 
@@ -38,8 +38,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     //lombok
-    compileOnly ("org.projectlombok:lombok:1.18.22")
-    annotationProcessor ("org.projectlombok:lombok:1.18.22")
+    compileOnly("org.projectlombok:lombok:1.18.22")
+    annotationProcessor("org.projectlombok:lombok:1.18.22")
 
     //mysql
     implementation("mysql:mysql-connector-java:8.0.32")
@@ -47,12 +47,13 @@ dependencies {
     implementation("org.hibernate:hibernate-validator:8.0.0.Final")
 
     //flyway
-    compile ("org.flywaydb.enterprise:flyway-mysql")
+    compile("org.flywaydb.enterprise:flyway-mysql")
     //jackson
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.codehaus.jackson:jackson-core-asl:1.9.13")
     implementation("org.codehaus.jackson:jackson-mapper-asl:1.9.13")
-
+    // Swagger
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
 
 }
 

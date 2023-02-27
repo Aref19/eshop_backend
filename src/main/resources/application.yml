@@ -12,6 +12,9 @@ spring:
     url: jdbc:mysql://localhost:3309/eshop-backend-db
     username: user
     password: db#1234
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
 
 
 
@@ -24,5 +27,11 @@ keycloak:
 
 
 server:
-  port: 8181
+  port: 8182
+  error:
+    include-message: always
 
+
+springdoc:
+  swagger-ui:
+    path: /swagger*
