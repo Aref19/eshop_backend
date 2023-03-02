@@ -27,6 +27,7 @@ public class Swagger {
                                                 .type(SecurityScheme.Type.OAUTH2)
                                                 .scheme("bearer")
                                                 .bearerFormat("JWT")
+                                                .in(SecurityScheme.In.HEADER)
                                                 .flows(new OAuthFlows().password(
                                                         new OAuthFlow().tokenUrl(
                                                                         "/auth/token"

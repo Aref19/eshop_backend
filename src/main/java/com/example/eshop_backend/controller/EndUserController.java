@@ -2,17 +2,18 @@ package com.example.eshop_backend.controller;
 
 
 import com.example.eshop_backend.model.Item;
-import com.example.eshop_backend.model.User;
 import com.example.eshop_backend.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 import com.example.eshop_backend.services.keycloakService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 
-@PreAuthorize("hasRole('ROLE_USER')")
+//@PreAuthorize("hasRole('ROLE_USER')")
 @RestController
 @RequestMapping("/endUser")
 public class EndUserController {
@@ -29,6 +30,7 @@ public class EndUserController {
 
     @GetMapping("/getAllItem")
     public List<Item> getAllItems(){
+
         return userService.getAllItems();
     }
     @GetMapping("/searchItem")

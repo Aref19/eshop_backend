@@ -27,13 +27,13 @@ public class ProviderController {
     }
 
     @PostMapping("/addItems")
-    public AdminException addItems(@RequestParam UUID uuid, @RequestBody List<ItemRequest> itemRequestList) {
-        return providerService.addItems(uuid, itemRequestList);
+    public AdminException addItems(@RequestBody List<ItemRequest> itemRequestList) {
+        return providerService.addItems( itemRequestList);
     }
 
     @GetMapping("/items")
-    public ResponseEntity<List> getItems(@RequestParam String nameProvider) {
-        return providerService.getItems(nameProvider);
+    public ResponseEntity<List> getItems() {
+        return providerService.getItems();
     }
 
 }

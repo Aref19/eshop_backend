@@ -25,6 +25,9 @@ public class Provider {
     private String name;
     @NonNull
     private String webLink;
+    @NonNull
+    private String email;
+
 
     @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Address> addresses;

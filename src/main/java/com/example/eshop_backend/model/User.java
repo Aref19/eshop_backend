@@ -1,7 +1,9 @@
 package com.example.eshop_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class User {
     private String userName;
     private String emailId;

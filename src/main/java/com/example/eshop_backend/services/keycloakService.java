@@ -4,11 +4,12 @@ package com.example.eshop_backend.services;
 import com.example.eshop_backend.config.KeycloakConfig;
 import com.example.eshop_backend.config.rotrift.client.KeycloakClient;
 import com.example.eshop_backend.model.User;
-import org.keycloak.admin.client.resource.RoleMappingResource;
-import org.keycloak.admin.client.resource.RoleScopeResource;
-import org.keycloak.admin.client.resource.UserResource;
+import com.example.eshop_backend.request.ProviderRequest;
 import org.keycloak.admin.client.resource.UsersResource;
-import org.keycloak.representations.idm.*;
+import org.keycloak.representations.idm.ClientRepresentation;
+import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.representations.idm.RoleRepresentation;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import retrofit2.HttpException;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -47,6 +47,22 @@ public class keycloakService {
     }
 
     public void createAccount(User user) {
+        CredentialRepresentation password = encodePassword(user.getPassword());
+        UsersResource userResource = keycloakConfig.userResource();
+        UserRepresentation userRepresentation = new UserRepresentation();
+        userRepresentation.setUsername(user.getEmailId());
+        userRepresentation.setEmail(user.getEmailId());
+        userRepresentation.setFirstName(user.getEmailId());
+        userRepresentation.setLastName(user.getEmailId());
+        userRepresentation.setCredentials(Collections.singletonList(password));
+        userRepresentation.setEnabled(true);
+        Response response = userResource.create(userRepresentation);
+        assignRole(user);
+    }
+
+    public void createAccountProvider(ProviderRequest providerRequest) {
+        User user=providerRequest.getUser();
+        user.setRole("provider");
         CredentialRepresentation password = encodePassword(user.getPassword());
         UsersResource userResource = keycloakConfig.userResource();
         UserRepresentation userRepresentation = new UserRepresentation();

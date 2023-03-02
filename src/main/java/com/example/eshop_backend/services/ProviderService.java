@@ -15,6 +15,9 @@ import com.example.eshop_backend.request.ItemRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -35,8 +38,9 @@ public class ProviderService {
     @Autowired
     ImageRepo imageRepo;
 
-    public AdminException addItems(UUID providerId, List<ItemRequest> itemRequestList) {
-        Optional<Provider> provider = providerRepo.findById(providerId);
+    public AdminException addItems( List<ItemRequest> itemRequestList) {
+       String email= emailProvider();
+        Optional<Provider> provider = providerRepo.findByEmail(email);
         if (!provider.isPresent()) {
             return new AdminException(HttpStatus.NOT_FOUND.toString(), "Provider not Found", Instant.now().toString());
         }
@@ -52,12 +56,25 @@ public class ProviderService {
 
     }
 
-    public ResponseEntity<List> getItems(String nameProvider) {
-        Optional<Provider> provider = providerRepo.findByName(nameProvider);
+    public ResponseEntity<List> getItems() {
+        String email= emailProvider();
+        Optional<Provider> provider = providerRepo.findByEmail(email);
         if (provider.isPresent()) {
 
             return new ResponseEntity<List>(new ArrayList<>(provider.get().getItemSet()), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List>(new ArrayList<>(), HttpStatus.NOT_FOUND);
+    }
+
+    private String emailProvider() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object name = authentication.getPrincipal();
+        Map<String, Object> maps;
+        Object userEmail = null;
+        if (name instanceof Jwt) {
+            maps = ((Jwt) name).getClaims();
+            userEmail = maps.get("email");
+        }
+        return userEmail.toString();
     }
 }
