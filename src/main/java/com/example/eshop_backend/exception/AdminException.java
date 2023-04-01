@@ -1,6 +1,6 @@
 package com.example.eshop_backend.exception;
 
-public class AdminException  {
+public class AdminException extends RuntimeException {
 
     private final String code;
     private final String message;

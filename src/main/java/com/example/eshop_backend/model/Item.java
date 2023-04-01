@@ -21,6 +21,8 @@ public class Item   {
     @NonNull
     private String des;
 
+    private String specialPrice;
+
 
     @ManyToOne()
     @JoinColumn(name = "Provider_Id")

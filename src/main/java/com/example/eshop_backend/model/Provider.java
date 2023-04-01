@@ -1,10 +1,9 @@
 package com.example.eshop_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+
+
+import jakarta.persistence.*;
 import lombok.*;
 
 
@@ -29,10 +28,10 @@ public class Provider {
     private String email;
 
 
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "provider",cascade = {CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
     private Set<Address> addresses;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "provider",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     private Set<Item> itemSet;
 
 }

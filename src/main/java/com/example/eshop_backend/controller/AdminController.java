@@ -34,14 +34,14 @@ public class AdminController {
     }
 
     @PostMapping("/addProvider")
-    public AdminException addProvider(@RequestBody ProviderRequest providerRequest) {
-        keycloakService.createAccountProvider(providerRequest);
-        return adminService.saveProvider(providerRequest);
+    public void addProvider(@RequestBody ProviderRequest providerRequest) {
+         keycloakService.createAccountProvider(providerRequest);
+         adminService.saveProvider(providerRequest);
     }
 
     @DeleteMapping("/deleteProvider")
-    public AdminException deleteProvider(@RequestParam UUID uuid) {
-        return adminService.deleteProvider(uuid);
+    public void deleteProvider(@RequestParam UUID uuid) {
+        adminService.deleteProvider(uuid);
     }
 
     @GetMapping("/getProvider")

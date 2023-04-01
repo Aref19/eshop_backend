@@ -30,7 +30,7 @@ public class ProviderRequest {
                 providerRequest.getWebLinkReq(),
                 providerRequest.user.getEmailId()
         );
-
+        provider.setAddresses(AddressReq.addressRequestToAddress(providerRequest));
         return provider;
     }
 }
