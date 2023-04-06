@@ -1,16 +1,18 @@
 package com.example.eshop_backend.controller;
 
 
-import com.example.eshop_backend.exception.AdminException;
+import com.example.eshop_backend.model.Item;
 import com.example.eshop_backend.request.ItemRequest;
+import com.example.eshop_backend.request.PageReq;
 import com.example.eshop_backend.services.ProviderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @PreAuthorize("hasRole('ROLE_provider')")
 @RestController
@@ -27,13 +29,13 @@ public class ProviderController {
     }
 
     @PostMapping("/addItems")
-    public AdminException addItems(@RequestBody List<ItemRequest> itemRequestList) {
-        return providerService.addItems( itemRequestList);
+    public void addItems(@RequestBody List<ItemRequest> itemRequestList) {
+        providerService.addItems(itemRequestList);
     }
 
-    @GetMapping("/items")
-    public ResponseEntity<List> getItems() {
-        return providerService.getItems();
-    }
+//    @GetMapping("/items")
+//    public Page<Item> getItems(@Valid PageReq pageReq) {
+//        return providerService.getItems(pageReq);
+//    }
 
 }

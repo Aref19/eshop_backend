@@ -1,14 +1,16 @@
 package com.example.eshop_backend.request;
 
 
+import com.example.eshop_backend.model.Address;
 import com.example.eshop_backend.model.Provider;
 import com.example.eshop_backend.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Transient;
 import lombok.*;
 
 
-import java.util.List;
-import java.util.UUID;
-
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -30,7 +32,8 @@ public class ProviderRequest {
                 providerRequest.getWebLinkReq(),
                 providerRequest.user.getEmailId()
         );
-        provider.setAddresses(AddressReq.addressRequestToAddress(providerRequest));
+        Set<Address> address= AddressReq.addressRequestToAddress(providerRequest.getAddress());
+        provider.setAddresses(address);
         return provider;
     }
 }

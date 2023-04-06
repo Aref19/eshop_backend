@@ -1,11 +1,12 @@
 package com.example.eshop_backend.services;
 
+import com.example.eshop_backend.Until;
 import com.example.eshop_backend.model.Item;
-import com.example.eshop_backend.repo.AddressRepo;
-import com.example.eshop_backend.repo.ImageRepo;
-import com.example.eshop_backend.repo.ItemRepo;
-import com.example.eshop_backend.repo.ProviderRepo;
+import com.example.eshop_backend.repo.*;
+import com.example.eshop_backend.request.PageReq;
+import com.example.eshop_backend.request.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,35 +20,23 @@ public class UserService {
     @Autowired
     ItemRepo itemRepo;
     @Autowired
-    ProviderRepo providerRepo;
+    keycloakService keycloakService;
     @Autowired
-    AddressRepo addressRepo;
-    @Autowired
-    ImageRepo imageRepo;
+    private UserRepo userRepo;
 
+    public Page<Item> getAllItems(PageReq pageReq) {
+        return itemRepo.findAll(Until.createPageable(pageReq));
 
-    public List<Item> getAllItems() {
-        List<Item> items=itemRepo.findAll();
-        return items;
     }
 
-    public List<Item> searchItem(String name) {
-        List<Item> items = itemRepo.findByTitle(name);
-        if (items.size() > 0) {
-            return items;
-        }
-        return new ArrayList<>();
+    public Page<Item> searchItem(PageReq pageReq, String name) {
+        return itemRepo.findByTitle(Until.createPageable(pageReq), name);
+
     }
 
-    public List<Item> sortItem() {
-        List<Item> items = itemRepo.findAll();
-        Collections.sort(items, new Comparator<Item>() {
-            @Override
-            public int compare(Item o1, Item o2) {
-                return o1.getTitle().compareTo(o2.getTitle());
-            }
-        });
-        return items;
+    public void createUser(UserRequest user) {
+        keycloakService.createAccount(user);
+        userRepo.save(UserRequest.UserRequestToUser(user));
     }
 
 }

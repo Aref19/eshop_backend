@@ -3,6 +3,7 @@ package com.example.eshop_backend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.keycloak.jose.jwk.JWK;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -12,11 +13,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Address  {
+public class Address {
     @NonNull
     @Id
     @JsonIgnore
-    private UUID id ;
+    private UUID id;
     @NonNull
     private String plz;
     @NonNull
@@ -25,8 +26,7 @@ public class Address  {
     private String number;
 
 
-    @ManyToOne()
-    @JoinColumn(name = "Provider_Id")
-    private Provider provider;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_Id")
+    private User user;
 }

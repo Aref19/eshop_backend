@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 @Getter
 @Setter
 public class ImageRequest {
@@ -17,13 +19,12 @@ public class ImageRequest {
 
     private String url;
 
-    public  static List<Image> ImageRequestToImage(List<ItemRequest> imageRequests, List<Item> items){
-        List<Image> images=new ArrayList<>();
-        for (int i=0;i<items.size();i++) {
-            List<ImageRequest> imageRequest=imageRequests.get(i).getImage().stream().toList();
-            for (int y=0;y<imageRequest.toArray().length;y++)
-            images.add(new Image(UUID.randomUUID(), imageRequest.get(y).url, items.get(i)));
-        }
-        return images;
+    public static Set<Image> ImageRequestToImage(Set<ImageRequest> image) {
+        return image.stream().map(imgeRe ->
+                new Image(
+                        UUID.randomUUID(),
+                        imgeRe.getUrl()
+                )
+        ).collect(Collectors.toSet());
     }
 }

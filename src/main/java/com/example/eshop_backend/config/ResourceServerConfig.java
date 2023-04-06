@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 public class ResourceServerConfig {
 
     @Bean
-    public SecurityFilterChain security(HttpSecurity http) throws Exception {
+    public SecurityFilterChain security(HttpSecurity http) throws Exception {  //SecurityFilterChain will be implemented in DefaultSecurityFilterChain
 
         return http
                 .httpBasic()
@@ -63,8 +64,8 @@ public class ResourceServerConfig {
     public SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new NullAuthenticatedSessionStrategy();
     }
-
-    private JwtAuthenticationConverter converter() {
+    @Bean
+    public JwtAuthenticationConverter converter() {
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter((j) -> {
 

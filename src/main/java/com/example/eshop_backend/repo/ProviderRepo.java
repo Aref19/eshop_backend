@@ -8,8 +8,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ProviderRepo extends JpaRepository<Provider, UUID> {
-
     public Optional<Provider> findByName(String name);
-
     public  Optional<Provider> findByEmail(String e);
+
+
+
 }

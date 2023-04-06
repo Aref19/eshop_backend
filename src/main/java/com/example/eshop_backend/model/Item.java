@@ -20,14 +20,16 @@ public class Item   {
     private String title;
     @NonNull
     private String des;
+    @NonNull
+    private int amount;
 
     private String specialPrice;
 
 
-    @ManyToOne()
-    @JoinColumn(name = "Provider_Id")
-    private Provider provider;
-    @OneToMany(mappedBy = "item",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+
+    @OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE},fetch = FetchType.LAZY)
+    @NonNull
+    @JoinColumn(name = "item_Id")
     private Set<Image> image;
 
 }

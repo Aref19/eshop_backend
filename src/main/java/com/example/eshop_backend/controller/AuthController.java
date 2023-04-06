@@ -21,10 +21,5 @@ public class AuthController {
         return keycloakService.getToken(userInfo);
     }
 
-    @PostMapping("/createAccount")
-    public void createAccount(@RequestBody User user) {
-        user.setRole("user");
-        keycloakService.createAccount(user);
-    }
 
 }

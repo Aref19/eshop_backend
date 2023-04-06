@@ -7,14 +7,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    show-sql: true
 
   datasource:
     url: jdbc:mysql://localhost:3309/eshop-backend-db
     username: user
     password: db#1234
-  mvc:
-    pathmatch:
-      matching-strategy: ANT_PATH_MATCHER
+
+
 
 
 
@@ -35,6 +35,5 @@ server:
 springdoc:
   swagger-ui:
     path: /swagger*
-
 
 

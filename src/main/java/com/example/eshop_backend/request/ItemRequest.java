@@ -19,19 +19,20 @@ public class ItemRequest {
     private String price;
     private String title;
     private String desc;
-
-
+    private int amount;
     private Set<ImageRequest> image;
 
 
-    public static Set<Item> ItemRequestToItem(List<ItemRequest> itemRequestList){
+    public static Set<Item> ItemRequestToItem(List<ItemRequest> itemRequestList) {
         return itemRequestList.stream().map(itemRequest ->
-            new Item(
-                    UUID.randomUUID(),
-                    itemRequest.price,
-                    itemRequest.title,
-                    itemRequest.desc
-            )
+                new Item(
+                        UUID.randomUUID(),
+                        itemRequest.price,
+                        itemRequest.title,
+                        itemRequest.desc,
+                        itemRequest.amount,
+                        ImageRequest.ImageRequestToImage(itemRequest.image)
+                )
         ).collect(Collectors.toSet());
     }
 

@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Provider {
     @NonNull
     @Id
-    @JsonIgnore
+
     private UUID id;
     @NonNull
     private String name;
@@ -27,11 +27,15 @@ public class Provider {
     @NonNull
     private String email;
 
-
-    @OneToMany(mappedBy = "provider",cascade = {CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
+    @Getter(AccessLevel.NONE)
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.REMOVE},fetch = FetchType.LAZY)
+    @JoinColumn(name = "provider_id")
     private Set<Address> addresses;
+
+    @Getter(AccessLevel.NONE)
     @JsonIgnore
-    @OneToMany(mappedBy = "provider",cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE},fetch = FetchType.LAZY)
+    @JoinColumn(name = "provider_id")
     private Set<Item> itemSet;
 
 }

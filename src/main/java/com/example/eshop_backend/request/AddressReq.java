@@ -2,10 +2,13 @@ package com.example.eshop_backend.request;
 
 
 import com.example.eshop_backend.model.Address;
+import com.example.eshop_backend.model.Provider;
+import com.example.eshop_backend.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -15,23 +18,24 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class AddressReq {
+    private int id;
     private String plz;
     private String str;
     private String number;
 
 
-    public static Set<Address> addressRequestToAddress(ProviderRequest pr) {
-        Set<Address> addresses= pr.getAddress().stream().map((addressRequest ->
-             new Address(
-                    UUID.randomUUID(),
-                    addressRequest.getPlz(),
-                    addressRequest.getStr(),
-                    addressRequest.getNumber()
+    public static Set<Address>   addressRequestToAddress(List<AddressReq> pr) {
+            Set<Address> addresses= pr.stream().map((addressRequest ->
+                    new Address(
+                            UUID.randomUUID(),
+                            addressRequest.getPlz(),
+                            addressRequest.getStr(),
+                            addressRequest.getNumber()
+                    )
+            )).collect(Collectors.toSet());
+            return addresses;
 
-            )
-        )).collect(Collectors.toSet());
-        System.out.println(addresses);
-        return addresses;
+
     }
 
     public String getPlz() {

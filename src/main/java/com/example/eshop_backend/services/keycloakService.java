@@ -1,10 +1,12 @@
 package com.example.eshop_backend.services;
 
 
+import com.example.eshop_backend.Until;
 import com.example.eshop_backend.config.KeycloakConfig;
 import com.example.eshop_backend.config.rotrift.client.KeycloakClient;
 import com.example.eshop_backend.model.User;
 import com.example.eshop_backend.request.ProviderRequest;
+import com.example.eshop_backend.request.UserRequest;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.ClientRepresentation;
 import org.keycloak.representations.idm.CredentialRepresentation;
@@ -18,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import retrofit2.HttpException;
 
-import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -30,6 +31,10 @@ public class keycloakService {
     @Autowired
     KeycloakClient keycloakC;
     Logger logger = LoggerFactory.getLogger(keycloakService.class);
+    @Autowired
+    UsersResource usersResource;
+
+
 
     public Object getToken(Map<String, String> userInfo) {
         try {
@@ -46,33 +51,16 @@ public class keycloakService {
         return null;
     }
 
-    public void createAccount(User user) {
-        CredentialRepresentation password = encodePassword(user.getPassword());
-        UsersResource userResource = keycloakConfig.userResource();
-        UserRepresentation userRepresentation = new UserRepresentation();
-        userRepresentation.setUsername(user.getEmailId());
-        userRepresentation.setEmail(user.getEmailId());
-        userRepresentation.setFirstName(user.getEmailId());
-        userRepresentation.setLastName(user.getEmailId());
-        userRepresentation.setCredentials(Collections.singletonList(password));
-        userRepresentation.setEnabled(true);
-        Response response = userResource.create(userRepresentation);
-        assignRole(user);
+    public void createAccount(UserRequest user) {
+        user.setRole("user");
+        saveUserInKeycloak(createUserRepresentation(user));
+        assignRole(UserRequest.UserRequestToUser(user));
     }
 
     public void createAccountProvider(ProviderRequest providerRequest) {
-        User user=providerRequest.getUser();
+        User user = providerRequest.getUser();
         user.setRole("provider");
-        CredentialRepresentation password = encodePassword(user.getPassword());
-        UsersResource userResource = keycloakConfig.userResource();
-        UserRepresentation userRepresentation = new UserRepresentation();
-        userRepresentation.setUsername(user.getEmailId());
-        userRepresentation.setEmail(user.getEmailId());
-        userRepresentation.setFirstName(user.getEmailId());
-        userRepresentation.setLastName(user.getEmailId());
-        userRepresentation.setCredentials(Collections.singletonList(password));
-        userRepresentation.setEnabled(true);
-        Response response = userResource.create(userRepresentation);
+        saveUserInKeycloak(createUserRepresentation(user));
         assignRole(user);
     }
 
@@ -84,12 +72,12 @@ public class keycloakService {
                 .roles()
                 .get(user.getRole())
                 .toRepresentation();
-         keycloakConfig.userResource().
+        keycloakConfig.userResource().
                 get(getUser(user)).
                 roles().clientLevel(clientRepresentation.getId()).
                 add(
-                Collections.singletonList(roleRepresentation)
-        );
+                        Collections.singletonList(roleRepresentation)
+                );
 
     }
 
@@ -112,5 +100,28 @@ public class keycloakService {
         return credentialRepresentation;
     }
 
+    private <T> UserRepresentation createUserRepresentation(T t) {
+        UserRepresentation userRepresentation = new UserRepresentation();
+        if(t instanceof User user){
+            CredentialRepresentation password = encodePassword(user.getPassword());
+            userRepresentation.setUsername(user.getEmailId());
+            userRepresentation.setEmail(user.getEmailId());
+            userRepresentation.setFirstName(user.getEmailId());
+            userRepresentation.setLastName(user.getEmailId());
+            userRepresentation.setCredentials(Collections.singletonList(password));
+            userRepresentation.setEnabled(true);
+        }
+        return  userRepresentation;
+    }
+
+    private void saveUserInKeycloak(UserRepresentation userRepresentation){
+        UsersResource userResource = keycloakConfig.userResource();
+        userResource.create(userRepresentation);
+
+    }
+
+    public void removeUser(String email){
+        usersResource.get(email).remove();
+    }
 
 }

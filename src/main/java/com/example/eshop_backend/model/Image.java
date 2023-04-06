@@ -2,31 +2,22 @@ package com.example.eshop_backend.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.UUID;
 
 @Entity
-@AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class Image {
-
     @Id
     @JsonIgnore
+    @NonNull
     private UUID id;
+    @NonNull
     private String url;
 
-    @ManyToOne()
-    @JsonIgnore
-    @JoinColumn(name = "item_Id")
-    private Item item;
 }

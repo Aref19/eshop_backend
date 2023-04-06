@@ -8,6 +8,7 @@ import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.ClientRepresentation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -21,7 +22,7 @@ public class KeycloakConfig {
     @Value("${keycloak.client-id}")
     final static String clientId = "eshop_backend";
     @Value("${keycloak.client-secret}")
-    final static String clientSecret = "C4MHtNVAt2cd3upSOjJ6fen4xVUCrUwP";
+    final static String clientSecret = "T2hxnRgPTXhZsjz2v3Q7Oq1PziciyyOU";
 
     public static Keycloak getInstance() {
         if (keycloak == null) {
@@ -39,18 +40,21 @@ public class KeycloakConfig {
 
     }
 
+    @Bean
     public RealmResource realmResource() {
         return getInstance().realm(realm);
     }
 
+    @Bean
     public UsersResource userResource() {
         return realmResource().users();
     }
 
-    public ClientRepresentation getClientRepresentation(){
-          return  realmResource()
-                  .clients()
-                  .findByClientId("eshop_backend").get(0);
+    @Bean
+    public ClientRepresentation getClientRepresentation() {
+        return realmResource()
+                .clients()
+                .findByClientId("eshop_backend").get(0);
     }
 
 

@@ -2,13 +2,12 @@ package com.example.eshop_backend.controller;
 
 
 import com.example.eshop_backend.model.Item;
+import com.example.eshop_backend.request.PageReq;
+import com.example.eshop_backend.request.UserRequest;
 import com.example.eshop_backend.services.UserService;
-import com.example.eshop_backend.services.keycloakService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +19,7 @@ public class EndUserController {
 
     @Autowired
     UserService userService;
-    @Autowired
-    keycloakService keycloakService;
+
 
     @GetMapping("/test")
     public String test(){
@@ -29,18 +27,17 @@ public class EndUserController {
     }
 
     @GetMapping("/getAllItem")
-    public List<Item> getAllItems(){
-
-        return userService.getAllItems();
+    public Page<Item> getAllItems(@RequestParam PageReq pageReq){
+        return userService.getAllItems(pageReq);
     }
+
     @GetMapping("/searchItem")
-    public List<Item> searchItem(@RequestParam String name){
-       return userService.searchItem(name);
+    public Page<Item> searchItem(@RequestParam PageReq pageReq, @RequestParam String name){
+        return userService.searchItem(pageReq,name);
     }
 
-    @GetMapping("/sortItem")
-    public List<Item> sortItem(@RequestParam String name){
-        return userService.sortItem();
+    @PostMapping("/createUserAccount")
+    public void createAccount(@RequestBody UserRequest user) {
+        userService.createUser(user);
     }
-
 }
