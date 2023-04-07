@@ -5,6 +5,7 @@ import com.example.eshop_backend.model.Item;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +18,13 @@ import java.util.stream.Collectors;
 public class ImageRequest {
 
 
-    private String url;
+    private MultipartFile url;
 
-    public static Set<Image> ImageRequestToImage(Set<ImageRequest> image) {
+    public static Set<Image> ImageRequestToImage(Set<MultipartFile> image) {
         return image.stream().map(imgeRe ->
                 new Image(
                         UUID.randomUUID(),
-                        imgeRe.getUrl()
+                        imgeRe.getName()
                 )
         ).collect(Collectors.toSet());
     }

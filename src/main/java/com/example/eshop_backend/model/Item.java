@@ -23,13 +23,16 @@ public class Item   {
     @NonNull
     private int amount;
 
+
     private String specialPrice;
 
 
 
-    @OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE},fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.REMOVE,CascadeType.MERGE,CascadeType.REFRESH},fetch = FetchType.LAZY)
     @NonNull
     @JoinColumn(name = "item_Id")
     private Set<Image> image;
+
+
 
 }

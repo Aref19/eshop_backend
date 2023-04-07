@@ -6,6 +6,7 @@ import com.example.eshop_backend.model.Provider;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
@@ -20,20 +21,19 @@ public class ItemRequest {
     private String title;
     private String desc;
     private int amount;
-    private Set<ImageRequest> image;
+    private Set<MultipartFile> image;
 
 
-    public static Set<Item> ItemRequestToItem(List<ItemRequest> itemRequestList) {
-        return itemRequestList.stream().map(itemRequest ->
-                new Item(
-                        UUID.randomUUID(),
-                        itemRequest.price,
-                        itemRequest.title,
-                        itemRequest.desc,
-                        itemRequest.amount,
-                        ImageRequest.ImageRequestToImage(itemRequest.image)
-                )
-        ).collect(Collectors.toSet());
+    public static Item ItemRequestToItem(ItemRequest itemRequestList) {
+        return new Item(
+                UUID.randomUUID(),
+                itemRequestList.price,
+                itemRequestList.title,
+                itemRequestList.desc,
+                itemRequestList.amount,
+                ImageRequest.ImageRequestToImage(itemRequestList.image)
+        );
+
     }
 
 }

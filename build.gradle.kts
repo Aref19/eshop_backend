@@ -55,6 +55,11 @@ dependencies {
     // Swagger
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
 
+    //aws
+    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
+// https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
+    implementation("com.amazonaws:aws-java-sdk:1.12.444")
+
 }
 
 tasks.withType<Test> {

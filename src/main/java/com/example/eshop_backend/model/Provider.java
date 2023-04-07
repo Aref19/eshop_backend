@@ -18,7 +18,6 @@ import java.util.UUID;
 public class Provider {
     @NonNull
     @Id
-
     private UUID id;
     @NonNull
     private String name;
@@ -26,6 +25,8 @@ public class Provider {
     private String webLink;
     @NonNull
     private String email;
+     @NonNull
+    private String logoUrl;
 
     @Getter(AccessLevel.NONE)
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.REMOVE},fetch = FetchType.LAZY)
@@ -38,4 +39,12 @@ public class Provider {
     @JoinColumn(name = "provider_id")
     private Set<Item> itemSet;
 
+
+    public Set<Item> getItemSet() {
+        return itemSet;
+    }
+
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
 }
